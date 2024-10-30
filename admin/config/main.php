@@ -152,8 +152,8 @@ return [
             'decimalSeparator' => ',',
             'thousandSeparator' => ' ',
             'currencyCode' => 'RUB',
-            'dateFormat' => 'php: d/m/Y',
-            'datetimeFormat' => 'php: d/m/Y H:i',
+            'dateFormat' => 'php:d.m.Y',
+            'datetimeFormat' => 'php:d.m.Y H:i',
         ],
 
         'urlManager' => [
@@ -164,7 +164,16 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-//                '/' => 'site/index',
+            //    '/' => 'site/index',
+               '/admin/post-category' => '/admin/post-category/index',
+               'post-category/create' => 'post-category/create',
+               'post-category/update/<id:\d+>' => 'post-category/update',
+               'post-category/delete/<id:\d+>' => 'post-category/delete',
+               'admin/post' => 'post/index',
+               'post/create' => 'post/create',
+               'post/update/<id:\d+>' => 'post/update',
+               '/admin/post/delete/<id:\d+>' => 'post/delete',
+               '/admin/site/login' => '/admin/site/login',
             ],
         ],
     ],

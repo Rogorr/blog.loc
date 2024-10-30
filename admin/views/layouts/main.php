@@ -64,6 +64,26 @@ FontAwesomeAsset::register($this);
                     ['label' => 'Информация о хостинге', 'url' => ['/site/info']],
                 ]
             ],
+            [
+                'label' => 'Управление сущностями',
+                'items' => [
+                    [
+                        'label' => 'Посты',
+                        'items' => [ 
+                            ['label' => 'Создание', 'url' => ['/setting/advanced']],
+                            ['label' => 'Изменение', 'url' => ['/setting/security']],
+                            ['label' => 'Удаление', 'url' => ['/setting/security']],
+                        ]
+                    ],
+                    [
+                        'label' => 'Категории постов',
+                        'items' => [ 
+                            ['label' => 'Дополнительные настройки', 'url' => ['/setting/advanced']],
+                            ['label' => 'Настройки безопасности', 'url' => ['/setting/security']],
+                        ]
+                    ],
+                ]
+            ],
             '<li class="divider-vertical"></li>',
         ];
         $menuItems[] = Html::tag(
