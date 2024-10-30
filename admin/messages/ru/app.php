@@ -145,4 +145,12 @@ return [
     'Email is confirmed' => 'Email подтвержден',
     'Email is not confirmed' => 'Email не подтвержден',
     'Email Verified At' => 'Дата подтверждения Email',
+    'Post Categories' => 'Категории постов',
+    'Create Post Category' => 'Создать категорию',
+    'Name' => 'Название',
+    'Post' => 'Посты',
+    'Posts' => 'Посты',
+    'Create Post' => 'Создать пост',
+    'Update Post Category: ' => 'Изменить категорию поста: ',
+    'Update Post: ' => 'Изменить пост: ',
 ];

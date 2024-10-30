@@ -5,7 +5,7 @@ namespace admin\models;
 use Yii;
 
 /**
- * This is the model class for table "post".
+ * This is the model class for table "Post".
  *
  * @property int $id
  * @property int $user_id ID Пользователя, создавшего пост
@@ -16,6 +16,9 @@ use Yii;
  * @property string|null $image Изображение (можно хранить строку с путем до изображения)
  * @property int $created_at Дата создания
  * @property int $updated_at Дата изменения
+ *
+ * @property PostCategory $postCategory
+ * @property User $user
  */
 class Post extends \yii\db\ActiveRecord
 {
@@ -24,7 +27,7 @@ class Post extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'post';
+        return 'Post';
     }
 
     /**
@@ -48,15 +51,35 @@ class Post extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'user_id' => 'User ID',
-            'title' => 'Title',
-            'text' => 'Text',
-            'post_category_id' => 'Post Category ID',
-            'status' => 'Status',
-            'image' => 'Image',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'id' => Yii::t('app', 'ID'),
+            'user_id' =>  Yii::t('app','User ID'),
+            'title' =>  Yii::t('app','Title'),
+            'text' =>  Yii::t('app','Text'),
+            'post_category_id' =>  Yii::t('app','Post Category ID'),
+            'status' =>  Yii::t('app','Status'),
+            'image' =>  Yii::t('app','Image'),
+            'created_at' =>  Yii::t('app','Created At'),
+            'updated_at' =>  Yii::t('app','Updated At'),
         ];
+    }
+
+    /**
+     * Gets query for [[PostCategory]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPostCategory()
+    {
+        return $this->hasOne(PostCategory::class, ['id' => 'post_category_id']);
+    }
+
+    /**
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace admin\controllers;
 
-use app\models\PostCategory;
-use yii\data\ActiveDataProvider;
+use admin\models\PostCategory;
+use admin\models\PostCategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -21,21 +21,6 @@ class PostCategoryController extends Controller
         return array_merge(
             parent::behaviors(),
             [
-                'access' => [
-                    'class' => AccessControl::class,
-                    'rules' => [
-                        [
-                            'actions' => ['index', 'create', 'update', 'delete'],
-                            'allow' => true,
-                            'roles' => ['@'], 
-                        ],
-                        [
-                            'actions' => ['view'], 
-                            'allow' => true,
-                            'roles' => ['?'],
-                        ],
-                    ],
-                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -53,21 +38,11 @@ class PostCategoryController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => PostCategory::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+        $searchModel = new PostCategorySearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }

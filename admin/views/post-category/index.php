@@ -1,23 +1,24 @@
 <?php
 
-use app\models\PostCategory;
+use admin\models\PostCategory;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use admin\components\widgets\AdminWidgetHelper;
 
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Post Categories';
+$this->title = Yii::t('app', 'Post Categories');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="post-category-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
+<h1><?= Html::encode($this->title) ?></h1>
     <p>
-        <?= Html::a('Create Post Category', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Post Category'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
@@ -27,7 +28,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'name',
+            [
+                'attribute' => 'name',
+                'label' => Yii::t('app', 'Name'),
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, PostCategory $model, $key, $index, $column) {

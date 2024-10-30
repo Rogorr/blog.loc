@@ -5,10 +5,13 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\models\Post $model */
 
-$this->title = 'Update Post: ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Posts', 'url' => ['index']];
+$this->title = Yii::t('app', 'Update Post: ' . $model->name, [
+    'nameAttribute' => '' . $model->name,
+]);
+
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Posts'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="post-update">
 

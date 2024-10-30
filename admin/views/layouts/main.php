@@ -67,21 +67,9 @@ FontAwesomeAsset::register($this);
             [
                 'label' => 'Управление сущностями',
                 'items' => [
-                    [
-                        'label' => 'Посты',
-                        'items' => [ 
-                            ['label' => 'Создание', 'url' => ['/setting/advanced']],
-                            ['label' => 'Изменение', 'url' => ['/setting/security']],
-                            ['label' => 'Удаление', 'url' => ['/setting/security']],
-                        ]
-                    ],
-                    [
-                        'label' => 'Категории постов',
-                        'items' => [ 
-                            ['label' => 'Дополнительные настройки', 'url' => ['/setting/advanced']],
-                            ['label' => 'Настройки безопасности', 'url' => ['/setting/security']],
-                        ]
-                    ],
+                    ['label' => 'Посты', 'url' => ['/post']],
+                    ['label' => 'Категории постов', 'url' => ['/post-category']],
+                   
                 ]
             ],
             '<li class="divider-vertical"></li>',
