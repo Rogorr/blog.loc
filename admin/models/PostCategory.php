@@ -3,6 +3,9 @@
 namespace admin\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use admin\models\PostCategory;
+
 
 /**
  * This is the model class for table "PostCategory".
@@ -53,5 +56,9 @@ class PostCategory extends \yii\db\ActiveRecord
     public function getPosts()
     {
         return $this->hasMany(Post::class, ['post_category_id' => 'id']);
+    }
+    public function getCategory()
+    {
+        return $this->hasOne(PostCategory::class, ['id' => 'post_category_id']);
     }
 }

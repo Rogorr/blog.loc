@@ -8,6 +8,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use admin\enum\PostStatus;
+use admin\models\PostCategory;
+use yii\helpers\ArrayHelper;
 
 /**
  * PostController implements the CRUD actions for Post model.
@@ -69,6 +71,9 @@ class PostController extends Controller
     public function actionCreate()
     {
         $model = new Post();
+        
+        $categories = PostCategory::find()->all();
+        $categoryList = ArrayHelper::map($categories, 'id', 'name');
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -80,7 +85,9 @@ class PostController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'categoryList' => $categoryList,
         ]);
+        
     }
 
     /**

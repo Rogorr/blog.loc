@@ -5,6 +5,7 @@ namespace admin\models;
 use Yii;
 use Illuminate\Database\Eloquent\Model;
 use admin\enum\PostStatus;
+use common\components\TimestampBehavior;
 
 
 /**
@@ -46,6 +47,7 @@ class Post extends \yii\db\ActiveRecord
             [['title', 'image'], 'string', 'max' => 255],
             [['post_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => PostCategory::class, 'targetAttribute' => ['post_category_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            [['created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -90,5 +92,12 @@ class Post extends \yii\db\ActiveRecord
     public function getStatusLabel(): string
     {
         return PostStatus::from($this->status)->label(); // Получаем текстовое представление статуса
+    }
+
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+        ];
     }
 }
