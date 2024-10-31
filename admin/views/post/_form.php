@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use admin\enum\PostStatus
 
 /** @var yii\web\View $this */
 /** @var app\models\Post $model */
@@ -20,7 +21,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'post_category_id')->textInput() ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <!-- <?= $form->field($model, 'status')->textInput() ?> -->
+    <?= $form->field($model, 'status')->dropDownList(
+    array_column(PostStatus::getAllStatuses(), 'label', 'value'),
+    ['prompt' => 'Выберите статус']
+    ) ?>
 
     <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
 

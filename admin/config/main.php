@@ -173,7 +173,7 @@ return [
                '/post/create' => '/post/create',
                '/post/update/<id:\d+>' => '/post/update',
                '/post/delete/<id:\d+>' => '/post/delete',
-               '/site/login' => '/admin/site/login',
+               '/site/login' => '/site/login',
             ],
         ],
     ],

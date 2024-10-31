@@ -7,6 +7,7 @@ use admin\models\PostSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use admin\enum\PostStatus;
 
 /**
  * PostController implements the CRUD actions for Post model.

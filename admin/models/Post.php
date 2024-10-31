@@ -3,6 +3,9 @@
 namespace admin\models;
 
 use Yii;
+use Illuminate\Database\Eloquent\Model;
+use admin\enum\PostStatus;
+
 
 /**
  * This is the model class for table "Post".
@@ -38,6 +41,7 @@ class Post extends \yii\db\ActiveRecord
         return [
             [['user_id', 'title', 'text', 'post_category_id', 'status', 'created_at', 'updated_at'], 'required'],
             [['user_id', 'post_category_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['status'], 'in', 'range' => array_column(PostStatus::getAllStatuses(), 'value')],
             [['text'], 'string'],
             [['title', 'image'], 'string', 'max' => 255],
             [['post_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => PostCategory::class, 'targetAttribute' => ['post_category_id' => 'id']],
@@ -81,5 +85,10 @@ class Post extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function getStatusLabel(): string
+    {
+        return PostStatus::from($this->status)->label(); // Получаем текстовое представление статуса
     }
 }
