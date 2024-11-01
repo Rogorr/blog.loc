@@ -153,4 +153,5 @@ return [
     'Create Post' => 'Создать пост',
     'Update Post Category: ' => 'Изменить категорию поста: ',
     'Update Post: ' => 'Изменить пост: ',
+    'Post Category ID' => 'Категория ',
 ];

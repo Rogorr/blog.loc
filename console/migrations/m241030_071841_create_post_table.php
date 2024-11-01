@@ -14,11 +14,11 @@ class m241030_071841_create_post_table extends Migration
     {
         $this->createTable('{{%Post}}', [
             'id' => $this->primaryKey(),
-            'user_id' => $this->integer()->notNull()->comment('ID Пользователя, создавшего пост'),
+            'user_id' => $this->integer()->comment('ID Пользователя, создавшего пост'),
             'title' => $this->string()->notNull()->comment('Заголовок'),
             'text' => $this->text()->notNull()->comment('Текст'),
             'post_category_id' => $this->integer()->notNull()->comment('ID категории'),
-            'status' => $this->integer()->notNull()->comment('Статус публикации: brandnew / published / rejected'),
+            'status' => $this->integer()->defaultValue(0)->comment('Статус публикации: brandnew / published / rejected'),
             'image' => $this->string()->comment('Изображение (можно хранить строку с путем до изображения)'),
             'created_at' => $this->integer()->notNull()->comment('Дата создания'),
             'updated_at' => $this->integer()->notNull()->comment('Дата изменения'),

@@ -2,10 +2,11 @@
 
 namespace admin\models;
 
+use common\models\User;
 use Yii;
-use Illuminate\Database\Eloquent\Model;
 use admin\enum\PostStatus;
 use common\components\TimestampBehavior;
+use yii\web\UploadedFile;
 
 
 /**
@@ -26,6 +27,9 @@ use common\components\TimestampBehavior;
  */
 class Post extends \yii\db\ActiveRecord
 {
+    
+    public UploadedFile|string|null $imageFile = null;
+
     /**
      * {@inheritdoc}
      */
@@ -40,7 +44,7 @@ class Post extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'title', 'text', 'post_category_id', 'status', 'created_at', 'updated_at'], 'required'],
+            [['title', 'text', 'post_category_id', ], 'required'],
             [['user_id', 'post_category_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['status'], 'in', 'range' => array_column(PostStatus::getAllStatuses(), 'value')],
             [['text'], 'string'],
@@ -48,6 +52,7 @@ class Post extends \yii\db\ActiveRecord
             [['post_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => PostCategory::class, 'targetAttribute' => ['post_category_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['created_at', 'updated_at'], 'safe'],
+            ['imageFile', 'file']
         ];
     }
 
@@ -66,7 +71,33 @@ class Post extends \yii\db\ActiveRecord
             'image' =>  Yii::t('app','Image'),
             'created_at' =>  Yii::t('app','Created At'),
             'updated_at' =>  Yii::t('app','Updated At'),
+            'imageFile' => Yii::t('app','Image')
         ];
+    }
+
+    public function beforeValidate(): bool
+    {
+        $this->imageFile = UploadedFile::getInstance($this, 'imageFile');
+        return parent::beforeValidate();
+    }
+
+    public function beforeSave($insert): bool
+    {
+        if ($this->imageFile  instanceof UploadedFile) {
+            if ($this->image) {
+                
+            if (file_exists($oldImagePath)) {
+                unlink($oldImagePath);
+            }
+            }
+            $path = 'C:\OSPanel\home\blog.loc\htdocs\uploads\\'; 
+            // $this->image = '';
+            $fileName = uniqid() . '.' . $this->imageFile->extension;
+            if ($this->imageFile->saveAs($path . $fileName)) {
+                $this->image = '/uploads/' . $fileName; 
+            }
+        }
+        return parent::beforeSave($insert);
     }
 
     /**
@@ -91,7 +122,7 @@ class Post extends \yii\db\ActiveRecord
 
     public function getStatusLabel(): string
     {
-        return PostStatus::from($this->status)->label(); // Получаем текстовое представление статуса
+        return PostStatus::from($this->status)->label(); 
     }
 
     public function behaviors()
@@ -99,5 +130,41 @@ class Post extends \yii\db\ActiveRecord
         return [
             TimestampBehavior::class,
         ];
+    }
+
+    public function fields()
+    {
+        return [
+            'id',
+            'user_id',
+            'title',
+            'text',
+            'status'=> function ($model) {
+                return $model->getStatusLabel(); 
+            },
+            // 'image' => function() {
+            //     return Yii::$app->request->hostInfo . $this->image;
+            // },
+            // 'post_category_id',
+            'category_name' => function ($model) {
+                return $model->postCategory ? $model->postCategory->name : null;
+            },
+            // 'status_label' => function ($model) {
+            //     return $model->getStatusLabel(); 
+            // },
+            
+        ];
+        $imageValue = Yii::$app->request->post('image');
+        $fields['image'] = function() use ($imageValue) {
+            return !empty($imageValue) ? Yii::$app->request->hostInfo . $this->image : null;
+        };
+        if (!Yii::$app->request->isAjax) {
+            $fields[] = [
+                'category_name' => function ($model) {
+                    return $model->postCategory ? $model->postCategory->name : null;
+                },
+            ];
+        }
+    
     }
 }

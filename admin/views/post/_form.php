@@ -19,7 +19,7 @@ use mihaildev\ckeditor\CKEditor;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <!-- <?= $form->field($model, 'user_id')->textInput() ?> -->
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
@@ -44,7 +44,7 @@ use mihaildev\ckeditor\CKEditor;
     ['prompt' => 'Выберите статус']
     ) ?>
 
-    <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'imageFile')->fileInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

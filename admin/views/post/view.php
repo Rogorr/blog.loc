@@ -35,9 +35,27 @@ $this->params['breadcrumbs'][] = $this->title;
             'text:ntext',
             'post_category_id',
             'status',
-            'image',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'image',
+                'format' => 'raw', 
+                'value' => function ($model) {
+                    return Html::img($model->image, ['alt' => 'Image', 'style' => 'max-width: 100%; height: auto;']);
+                },
+            ],
+            [
+                'attribute' => 'created_at',
+                'format' => 'datetime', 
+                'value' => function ($model) {
+                    return Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i');
+                },
+            ],
+            [
+                'attribute' => 'updated_at',
+                'format' => 'datetime', 
+                'value' => function ($model) {
+                    return Yii::$app->formatter->asDatetime($model->updated_at, 'php:d.m.Y H:i');
+                },
+            ],
         ],
     ]) ?>
 

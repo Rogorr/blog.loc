@@ -113,7 +113,7 @@ return [
                     // send original response data
                     if ($response->data) {
                         $response_data['data'] = $response->data['data'] ?? $response->data;
-                        $response_data['data']['status'] = Yii::$app->response->statusCode;
+                        $response_data['status'] = Yii::$app->response->statusCode;
                     }
 
                     $response->data = $response_data;
@@ -162,19 +162,12 @@ return [
             'showScriptName' => false,
             'rules' => [
 
-//                '<_m:[\w-]+>/error' => '<_m>/site/error',                // v1/dev-info
-//                '<_m:[\w-]+>/dev-info' => '<_m>/site/dev-info',                // v1/dev-info
-//                '<_m:[\w-]+>/<_c:[\w-]+>/<id:\d+>' => '<_m>/<_c>/index',                // v1/user/1
-//                '<_m:[\w-]+>/<_c:[\w-]+>' => '<_m>/<_c>/index',                         // v1/user
-            //    '<_m:[\w-]+>/<_c:[\w-]+>/<_a:[\w-]+>' => '<_m>/<_c>/<_a>',              // v1/user/login
-//                '<_m:[\w-]+>/<_c:[\w-]+>/<id:\d+>/<_a:[\w-]+>' => '<_m>/<_c>/<_a>',     // v1/user/1/delete
+
 
               ['class' => 'yii\rest\UrlRule',
                   'controller' => [
                       'v1/user',
-                      'v1/test',
-                    //   'v1/post',
-                    //   'v1/rbac'
+                        'v1/post',
                    ]
               ],
             ],

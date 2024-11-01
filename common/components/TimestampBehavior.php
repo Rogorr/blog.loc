@@ -9,18 +9,19 @@ class TimestampBehavior extends Behavior
     public function events()
     {
         return [
-            ActiveRecord::EVENT_BEFORE_INSERT => 'setCreatedAt',
-            ActiveRecord::EVENT_BEFORE_UPDATE => 'setUpdatedAt',
+            ActiveRecord::EVENT_BEFORE_INSERT => 'beforeInsert',
+            ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeUpdate',
         ];
     }
 
-    public function setCreatedAt($event)
+    public function beforeInsert($event)
     {
-        $this->owner->created_at = date('d.m.Y H:i'); 
+        $this->owner->created_at = time();
+        $this->owner->updated_at = time();
     }
 
-    public function setUpdatedAt($event)
+    public function beforeUpdate($event)
     {
-        $this->owner->updated_at = date('d.m.Y H:i'); 
+        $this->owner->updated_at = time();
     }
 }

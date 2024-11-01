@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\models\Post $model */
 
-$this->title = Yii::t('app', 'Update Post: ' . $model->name, [
-    'nameAttribute' => '' . $model->name,
+$this->title = Yii::t('app', 'Update Post: ' . $model->title, [
+    'nameAttribute' => '' . $model->title,
 ]);
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Posts'), 'url' => ['index']];
@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
     <?= $this->render('_form', [
         'model' => $model,
+        'categoryList' => $categoryList,
     ]) ?>
 
 </div>

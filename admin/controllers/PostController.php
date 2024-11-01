@@ -11,6 +11,7 @@ use admin\enum\PostStatus;
 use admin\models\PostCategory;
 use yii\helpers\ArrayHelper;
 
+
 /**
  * PostController implements the CRUD actions for Post model.
  */
@@ -100,13 +101,16 @@ class PostController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $categories = PostCategory::find()->all();
+        $categoryList = ArrayHelper::map($categories, 'id', 'name');
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
-        }
+        }    
 
         return $this->render('update', [
             'model' => $model,
+            'categoryList' => $categoryList,
         ]);
     }
 
