@@ -33,8 +33,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'user_id',
             'title',
             'text:ntext',
-            'post_category_id',
-            'status',
+            [
+                'attribute' => 'post_category_id',
+                'label' => 'Category',
+                'value' => function ($model) {
+                    return $model->postCategory ? $model->postCategory->name : 'Не указана';
+                },
+            ],
+            [
+                'attribute' => 'status',
+                'label' => 'Status',
+                'value' => function ($model) {
+                    return $model->getStatusLabel();
+                },
+            ],
             [
                 'attribute' => 'image',
                 'format' => 'raw', 
