@@ -134,37 +134,24 @@ class Post extends \yii\db\ActiveRecord
 
     public function fields()
     {
-        return [
+        $fields = [
             'id',
             'user_id',
             'title',
             'text',
-            'status'=> function ($model) {
+            'status' => function ($model) {
                 return $model->getStatusLabel(); 
             },
-            // 'image' => function() {
-            //     return Yii::$app->request->hostInfo . $this->image;
-            // },
-            // 'post_category_id',
             'category_name' => function ($model) {
                 return $model->postCategory ? $model->postCategory->name : null;
             },
-            // 'status_label' => function ($model) {
-            //     return $model->getStatusLabel(); 
-            // },
-            
         ];
-        $imageValue = Yii::$app->request->post('image');
-        $fields['image'] = function() use ($imageValue) {
-            return !empty($imageValue) ? Yii::$app->request->hostInfo . $this->image : null;
-        };
-        if (!Yii::$app->request->isAjax) {
-            $fields[] = [
-                'category_name' => function ($model) {
-                    return $model->postCategory ? $model->postCategory->name : null;
-                },
-            ];
-        }
     
+        // Добавляем поле image
+        $fields['image'] = function() {
+            return !empty($this->image) ? Yii::$app->request->hostInfo . $this->image : null;
+        };
+    
+        return $fields;
     }
 }
